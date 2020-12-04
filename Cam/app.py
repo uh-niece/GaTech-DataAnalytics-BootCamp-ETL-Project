@@ -42,8 +42,37 @@ def home():
             "Contributors: Anis Ali, Cam Foster, Ida Astaneh, Michael Alread<br><br>"
             "Available API routes are:<br><br>"
             "/quote-api/v1.0/<br>"
-            "/quote-api/v1.0/not-landing-page/<br>"
+            "/quote-api/v1.0/quotes<br>"
+            "/quote-api/v1.0/authors<br>"
+            "/quote-api/v1.0/authors/authorname<br>"
+            "/quote-api/v1.0/tags<br>"
+            "/quote-api/v1.0/tags/tag<br>"
+            "/quote-api/v1.0/top10tags<br>"
     )
+
+@app.route("/quote-api/v1.0/quotes")
+def quotes():
+    return("In work.")
+
+@app.route("/quote-api/v1.0/authors")
+def authors():
+    return("In work.")
+
+@app.route("/quote-api/v1.0/authors/<authorname>")
+def author_name(authorname):
+    return("In work.")
+
+@app.route("/quote-api/v1.0/tags")
+def tags():
+    return("In work.")
+
+@app.route("/quote-api/v1.0/tags/<tag>")
+def tags_search(tag):
+    return("In work.")
+
+@app.route("/quote-api/v1.0/top10tags")
+def top10tags():
+    return("In work.")
 
 if __name__ == "__main__":
     app.run(debug=True)
