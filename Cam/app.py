@@ -25,13 +25,8 @@ def home():
     return ("ETL Project API - Scraping Quotes from the Interwebs<br><br>"
             "Contributors: Anis Ali, Cam Foster, Ida Astaneh, Michael Alread<br><br>"
             "Available API routes are:<br><br>"
-            "/quote-api/v1.0/<br>"
-            "/quote-api/v1.0/quotes<br>"
-            "/quote-api/v1.0/authors<br>"
-            "/quote-api/v1.0/authors/authorname<br>"
-            "/quote-api/v1.0/tags<br>"
-            "/quote-api/v1.0/tags/tag<br>"
-            "/quote-api/v1.0/top10tags<br>"
+            "/quote-api/quotes<br>"
+            "/quote-api/top10tags<br>"
     )
 
 @app.route("/quotes")
@@ -61,8 +56,8 @@ def quotes():
 def authors():
     return("In work.")
 
-@app.route("/quote-api/v1.0/authors/<authorname>")
-def author_name(authorname):
+@app.route("/authors/authornames")
+def authornames():
     return("In work.")
 
 @app.route("/quote-api/v1.0/tags")
