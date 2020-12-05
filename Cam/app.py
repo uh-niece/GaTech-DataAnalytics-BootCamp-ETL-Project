@@ -15,26 +15,10 @@ from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine, func, inspect
 
-#### Need to uncomment this section once database is setup
-
-# # Create the database instance
-# engine = create_engine("sqlite:///Resources/hawaii.sqlite")
-
-# # reflect an existing database into a new model
-# Base = automap_base()
-
-# # reflect the tables
-# Base.prepare(engine, reflect=True)
-
-# # Save references to each table
-# Measurement = Base.classes.measurement
-# Station = Base.classes.station
-
-# # Create our session (link) from Python to the DB
-# session = Session(engine)
-
-# Create the flask instance
 app = Flask(__name__)
+connection_string = 'postgres://iljeyeekqbmawa:14a1e06b7556d81e7154a5983966a4bf2e2c1139cd0a30beb10a12e17b1868c9@ec2-52-22-238-188.compute-1.amazonaws.com:5432/dd6g3lf7c51860'
+engine = create_engine(connection_string)
+
 
 @app.route("/")
 def home():
@@ -50,9 +34,28 @@ def home():
             "/quote-api/v1.0/top10tags<br>"
     )
 
-@app.route("/quote-api/v1.0/quotes")
+@app.route("/quotes")
 def quotes():
-    return("In work.")
+    result = {}
+    result_set = engine.execute('''select id, author_name, text
+    from quotes q inner join author a on q.author_name = a.name
+    order by id''')
+    total_quotes = result_set.rowcount
+    quotes = []
+    for row in result_set:
+        quote = {}
+        quote['text'] = row.text
+        quote['author'] = row.author_name
+        tags = []
+        tags_result = engine.execute(
+            f'select tag  from tags where quote_id= {row.id}')
+        for tagrow in tags_result:
+            tags.append(tagrow.tag)
+        quote['tags'] = tags
+        quotes.append(quote)
+    result['quotes'] = quotes
+    result['total'] = total_quotes
+    return jsonify(result)
 
 @app.route("/quote-api/v1.0/authors")
 def authors():
