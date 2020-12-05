@@ -127,3 +127,8 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+
+scraping_anis.ipynb
+ETL Project-anis.ipynb
+.DS_Store
