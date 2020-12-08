@@ -24,9 +24,9 @@ def home():
     return ("ETL Project API - Scraping Quotes from the Interwebs<br><br>"
             "Contributors: Anis Ali, Cam Foster, Ida Astaneh, Michael Alread<br><br>"
             "Available API routes are:<br><br>"
-            "/quote-api/quotes<br>"
-            "/quote-api/authors<br>"            
-            "/quote-api/top10tags<br>"
+            "/quotes<br>"
+            "/authors<br>"            
+            "/top10tags<br>"
     )
 
 @app.route("/quotes")
