@@ -55,24 +55,17 @@ def quotes():
 @app.route("/authors")
 def authors():
     result = {}
-    result_set = engine.execute('''select id, author_name, text
-    from quotes q inner join author a on q.author_name = a.name
-    order by id''')
-    total_quotes = result_set.rowcount
-    quotes = []
+    result_set = engine.execute('''select name, born, description from author ''')
+    total_authors = result_set.rowcount
+    authors = []
     for row in result_set:
-        quote = {}
-        quote['text'] = row.text
-        quote['author'] = row.author_name
-        tags = []
-        tags_result = engine.execute(
-            f'select tag  from tags where quote_id= {row.id}')
-        for tagrow in tags_result:
-            tags.append(tagrow.tag)
-        quote['tags'] = tags
-        quotes.append(quote)
-    result['quotes'] = quotes
-    result['total'] = total_quotes
+        author = {}
+        author['name'] = row.name
+        author['born'] = row.born
+        author['description'] = row.description
+        authors.append(author)
+    result['author'] = authors
+    result['total'] = total_authors
     return jsonify(result)
 
 @app.route("/top10tags")
