@@ -19,6 +19,13 @@ app = Flask(__name__)
 connection_string = 'postgres://iljeyeekqbmawa:14a1e06b7556d81e7154a5983966a4bf2e2c1139cd0a30beb10a12e17b1868c9@ec2-52-22-238-188.compute-1.amazonaws.com:5432/dd6g3lf7c51860'
 engine = create_engine(connection_string)
 
+Base = automap_base()
+Base.prepare(engine, reflect=True)
+# print(Base.classes.keys())
+Quotes = Base.classes.quotes
+Authors = Base.classes.author
+# Tags = Base.classes.tag
+
 @app.route("/")
 def home():
     return ("ETL Project API - Scraping Quotes from the Interwebs<br><br>"
@@ -54,6 +61,7 @@ def quotes():
 
 @app.route("/authors")
 def authors():
+    session = Session(engine)
     result = {}
     result_set = engine.execute('''select name, born, description from author ''')
     total_authors = result_set.rowcount
@@ -63,9 +71,25 @@ def authors():
         author['name'] = row.name
         author['born'] = row.born
         author['description'] = row.description
+        quote_result = session.query(Quotes.text, Quotes.id).filter(Quotes.author_name==row.name)
+        author['count'] = session.query(Quotes.text).filter(Quotes.author_name==row.name).count()
+        quotes = []
+        quotes 
+        for row2 in quote_result:
+            quote = {}
+            quote['text'] = row2.text
+            tags = []
+            tags_result = engine.execute(
+                f'select tag  from tags where quote_id= {row2.id}')
+            for tagrow in tags_result:
+                tags.append(tagrow.tag)
+            quote['tags'] = tags
+            quotes.append(quote)
+        author['quotes'] = quotes     
         authors.append(author)
-    result['author'] = authors
+    result['details'] = authors
     result['total'] = total_authors
+    session.close()
     return jsonify(result)
 
 @app.route("/top10tags")
