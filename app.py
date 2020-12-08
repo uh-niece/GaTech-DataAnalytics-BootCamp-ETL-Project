@@ -71,7 +71,7 @@ def authors():
 @app.route("/top10tags")
 def top10tags():
     result = []
-    result_set = engine.execute('''select tag, count(*) as total from tags where tag<>'attributed-no-source' group by tag order by total desc, tag desc limit 20''')
+    result_set = engine.execute('''select tag, count(*) as total from tags where tag<>'attributed-no-source' group by tag order by total desc, tag desc limit 10''')
     for row in result_set:
         tag = {"tag":row.tag, "total":row.total}
         result.append(tag)
