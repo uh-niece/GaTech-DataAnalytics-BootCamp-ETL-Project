@@ -4,8 +4,8 @@ In this project, the analysts are asked to introduce ETL to perform ETL on real 
     2) One table for author information   
     3) One table to store quote and tag relation   
 
-Once completed, the analysts will create a FLASK API for the following endpoints:
+Once completed, the analysts will create a FLASK API for the following endpoints:   
 
-- /quotes
-- /authors
-- /top10tags
+- /quotes   
+- /authors   
+- /top10tags   
