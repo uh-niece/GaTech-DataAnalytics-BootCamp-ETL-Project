@@ -2,6 +2,6 @@ In this project, the analysts are asked to introduce ETL to perform ETL on real 
 
 Once completed, the analysts will create a FLASK API for the following endpoints:
 
-/quotes
-/authors
-/top10tags
+- /quotes
+- /authors
+- /top10tags
